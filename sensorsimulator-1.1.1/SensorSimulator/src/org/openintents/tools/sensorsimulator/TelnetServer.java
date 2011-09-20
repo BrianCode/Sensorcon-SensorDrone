@@ -167,15 +167,15 @@ public class TelnetServer{
 	 * IMPORTANT: geo fix command is still bugged, consult project documentation
 	 * for more reference.
 	 */
-	public void sendGPS() {
-		float longitude = mSensorSimulator.getLongitude();
-		float latitude = mSensorSimulator.getLatitude();
-		float altitude = mSensorSimulator.getAltitude();
-
-		if(out!=null){
-			out.println("geo fix "+longitude +" "+latitude+" "+altitude);
-		}
-	}
+//	public void sendGPS() {
+//		float longitude = mSensorSimulator.getLongitude();
+//		float latitude = mSensorSimulator.getLatitude();
+//		float altitude = mSensorSimulator.getAltitude();
+//
+//		if(out!=null){
+//			out.println("geo fix "+longitude +" "+latitude+" "+altitude);
+//		}
+//	}
 
 	/**
 	 * Method used to read file and store attributes written inside a file to correct

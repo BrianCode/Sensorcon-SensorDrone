@@ -3,6 +3,8 @@
  */
 package org.openintents.tools.sensorsimulator;
 
+import javax.swing.JTextField;
+
 /**
  *
  * @author Lee Sanghoon
@@ -10,25 +12,29 @@ package org.openintents.tools.sensorsimulator;
 public interface ISensorSimulator {
 
 	// Supported sensors:
-	static final String ORIENTATION = "orientation";
-	static final String ACCELEROMETER = "accelerometer";
 	static final String TEMPERATURE = "temperature";
-	static final String MAGNETIC_FIELD = "magnetic field";
 	static final String LIGHT = "light";
 	static final String PROXIMITY = "proximity";
-	static final String TRICORDER = "tricorder";
-	static final String BARCODE_READER = "barcode reader";
+	static final String CARBON_MONOXIDE = "carbon monoxide";
+	static final String RED_GAS = "reducing gases";
+	static final String OX_GAS = "oxidizing gases";
+	static final String PRESSURE = "pressures";
+	static final String HUMIDITY = "humidity";
+	static final String INFRARED = "infrared temp.";
 
-	static final String SHOW_ACCELERATION = "show acceleration";
 	static final String BINARY_PROXIMITY = "binary proximity";
 	
-	static final String AVERAGE_ORIENTATION = "average orientation";
-	static final String AVERAGE_ACCELEROMETER = "average accelerometer";
 	static final String AVERAGE_TEMPERATURE = "average temperature";
-	static final String AVERAGE_MAGNETIC_FIELD = "average magnetic field";
 	static final String AVERAGE_LIGHT = "average light";
 	static final String AVERAGE_PROXIMITY = "average proximity";
-	static final String AVERAGE_TRICORDER = "average tricorder";
+	
+	static final String AVERAGE_CARBON_MONOXIDE = "average carbon monoxide";
+	static final String AVERAGE_RED_GAS = "average reducing gases";
+	static final String AVERAGE_OX_GAS = "average oxidizing gases";
+	static final String AVERAGE_PRESSURE = "average pressures";
+	static final String AVERAGE_HUMIDITY = "average humidity";
+	static final String AVERAGE_INFRARED = "average infrared temp.";
+
 
 	static final String DISABLED = "DISABLED";
 
@@ -39,22 +45,15 @@ public interface ISensorSimulator {
 	final static public String SQUARED = "\u00b2"; // superscript two
 
     // Action Commands:
-    static String yawPitch = "yaw & pitch";
-    static String rollPitch = "roll & pitch";
     static String move = "move";
     static String timerAction = "timer";
     static String setPortString = "set port";
     //action for telnet connection and send gps
     static String connectViaTelnet = "connectViaTelnet";
-    static String sendGPS = "send gps";
     static String recordReplay="replay Record";
     static String playbackReplay="replay Playback";
     static String emulateBattery = "emulate battery";
     static String nextTimeEvent = "next Time Event";
-
-	static int mouseYawPitch = 1;
-	static int mouseRollPitch = 2;
-	static int mouseMove = 3;
 
 
 	/**
@@ -90,39 +89,30 @@ public interface ISensorSimulator {
 	public int getTelnetPort();
 
 	/*
-	 * yaw & pitch & roll slide
-	 */
-	public int getYaw();
-	public int getPitch();
-	public int getRoll();
-
-	public void setYaw(int yaw);
-	public void setPitch(int pitch);
-	public void setRoll(int roll);
-
-	/*
 	 * Support Sensors
 	 */
-    public boolean isSupportedOrientation();
-    public boolean isSupportedAccelerometer();
     public boolean isSupportedTemperature();
-    public boolean isSupportedMagneticField();
     public boolean isSupportedLight();
     public boolean isSupportedProximity();
-    public boolean isSupportedTricorder();
-    public boolean isSupportedBarcodeReader();
-
+    public boolean isSupportedCarbonMonoxide();
+    public boolean isSupportedRedGas();
+    public boolean isSupportedOxGas();
+    public boolean isSupportedHumidity();
+    public boolean isSupportedPressure();
+    public boolean isSupportedInfrared();
+    
     /*
      * Enabled Sensors
      */
-    public boolean isEnabledOrientation();
-    public boolean isEnabledAccelerometer();
     public boolean isEnabledTemperature();
-    public boolean isEnabledMagneticField();
     public boolean isEnabledLight();
     public boolean isEnabledProximity();
-    public boolean isEnabledTricorder();
-    public boolean isEnabledBarcodeReader();
+    public boolean isEnabledCarbonMonoxide();
+    public boolean isEnabledRedGas();
+    public boolean isEnabledOxGas();
+    public boolean isEnabledHumidity();
+    public boolean isEnabledPressure();
+    public boolean isEnabledInfrared();
 
     /**
      * mSensorSimulator.setEnabledAccelerometer(enable);
@@ -131,30 +121,19 @@ public interface ISensorSimulator {
      * @param enable
      * @return
      */
-    public void setEnabledOrientation(boolean enable);
-    public void setEnabledAccelerometer(boolean enable);
     public void setEnabledTemperature(boolean enable);
-    public void setEnabledMagneticField(boolean enable);
     public void setEnabledLight(boolean enable);
     public void setEnabledProximity(boolean enable);
-    public void setEnabledTricorder(boolean enable);
-    public void setEnabledBarcodeReader(boolean enable);
+    public void setEnabledCarbonMonoxide(boolean enable);
+    public void setEnabledRedGas(boolean enable);
+    public void setEnabledOxGas(boolean enable);
+    public void setEnabledHumidity(boolean enable);
+    public void setEnabledPressure(boolean enable);
+    public void setEnabledInfrared(boolean enable);
 
     /*
      * Sensor Update Rate
      */
-    public double[] getUpdateRatesAccelerometer();
-    public double getDefaultUpdateRateAccelerometer();
-    public double getCurrentUpdateRateAccelerometer();
-    public boolean updateAverageAccelerometer();
-    public double[] getUpdateRatesCompass();
-    public double getDefaultUpdateRateCompass();
-    public double getCurrentUpdateRateCompass();
-    public boolean updateAverageCompass();
-    public double[] getUpdateRatesOrientation();
-    public double getDefaultUpdateRateOrientation();
-    public double getCurrentUpdateRateOrientation();
-    public boolean updateAverageOrientation();
     public double[] getUpdateRatesThermometer();
     public double getDefaultUpdateRateThermometer();
     public double getCurrentUpdateRateThermometer();
@@ -168,12 +147,41 @@ public interface ISensorSimulator {
     public double getCurrentUpdateRateProximity();
     public boolean updateAverageProximity();
     
-    public void setCurrentUpdateRateAccelerometer(double value);
-    public void setCurrentUpdateRateCompass(double value);
-    public void setCurrentUpdateRateOrientation(double value);
+    public double getDefaultUpdateRateCarbonMonoxide();
+    public double getCurrentUpdateRateCarbonMonoxide();
+    public boolean updateAverageCarbonMonoxide();
+    
+    public double getDefaultUpdateRateRedGas();
+    public double getCurrentUpdateRateRedGas();
+    public boolean updateAverageRedGas();
+    
+    public double getDefaultUpdateRateOxGas();
+    public double getCurrentUpdateRateOxGas();
+    public boolean updateAverageOxGas();
+    
+    public double getDefaultUpdateRateHumidity();
+    public double getCurrentUpdateRateHumidity();
+    public boolean updateAverageHumidity();
+    
+    public double getDefaultUpdateRatePressure();
+    public double getCurrentUpdateRatePressure();
+    public boolean updateAveragePressure();
+    
+    public double getDefaultUpdateRateInfrared();
+    public double getCurrentUpdateRateInfrared();
+    public boolean updateAverageInfrared();
+    
+    
     public void setCurrentUpdateRateThermometer(double value);
     public void setCurrentUpdateRateLight(double value);
     public void setCurrentUpdateRateProximity(double value);
+    
+    public void setCurrentUpdateRateCarbonMonoxide(double value);
+    public void setCurrentUpdateRateRedGas(double value);
+    public void setCurrentUpdateRateOxGas(double value);
+    public void setCurrentUpdateRateHumidity(double value);
+    public void setCurrentUpdateRatePressure(double value);
+    public void setCurrentUpdateRateInfrared(double value);
     
     /*
      * Simulation Update
@@ -182,47 +190,21 @@ public interface ISensorSimulator {
     public double getRefreshAfter();
 
     public void updateSensorRefresh();
-	public void updateEmulatorAccelerometerRefresh();
-	public void updateEmulatorCompassRefresh();
-	public void updateEmulatorOrientationRefresh();
 	public void updateEmulatorThermometerRefresh();
 	public void updateEmulatorLightRefresh();
 	public void updateEmulatorProximityRefresh();
 	
-    /*
-     * Accelerometer
-     */
-	public double getGravityConstant();
-	public double getAccelerometerLimit();
-	public double getPixelsPerMeter();
-	public double getSpringConstant();
-	public double getDampingConstant();
-
-    public boolean isShowAcceleration();
-
-    /*
-     * Gravity
-     */
-	public double getGravityX();
-	public double getGravityY();
-	public double getGravityZ();
-
-    /*
-     * Magnetic Field
-     */
-	public double getMagneticFieldNorth();
-	public double getMagneticFieldEast();
-	public double getMagneticFieldVertical();
-
+	public void updateEmulatorCarbonMonoxideRefresh();
+	public void updateEmulatorRedGasRefresh();
+	public void updateEmulatorOxGasRefresh();
+	public void updateEmulatorHumidityRefresh();
+	public void updateEmulatorPressureRefresh();
+	public void updateEmulatorInfraredRefresh();
+	
     /*
      * Temperature
      */
     public double getTemperature();
-
-    /*
-     * Barcode
-     */
-    public String getBarcode();
 
     /*
      * Light 
@@ -234,15 +216,26 @@ public interface ISensorSimulator {
      */
     public float getProximity();
     
+    public float getCarbonMonoxide();
+    public float getRedGas();
+    public float getOxGas();
+    public float getHumidity();
+    public float getPressure();
+    public float getInfrared();
+    
     /*
      * Random Component
      */
-    public double getRandomAccelerometer();
-    public double getRandomMagneticField();
-    public double getRandomOrientation();
     public double getRandomTemperature();
     public double getRandomLight();
     public double getRandomProximity();
+    
+    public double getRandomCarbonMonoxide();
+    public double getRandomRedGas();
+    public double getRandomOxGas();
+    public double getRandomHumidity();
+    public double getRandomPressure();
+    public double getRandomInfrared();
     
     /*
      * Real Sensor Bridge
@@ -253,33 +246,24 @@ public interface ISensorSimulator {
 	public void setRealDeviceOutput(String text);
 
 
-	/*
-	 * GPS
-	 */
-	public float getLongitude();
-	public float getLatitude();
-	public float getAltitude();
-	public String getLisName();
 
+  /**
+   * @param textField It can be JTextField (for Swing) or Text (for SWT)
+   * @param defaultValue
+   * @return
+   */
+  public double getSafeDouble(JTextField textField, double defaultValue);
 
+  /**
+   * @param textField It can be JTextField (for Swing) or Text (for SWT)
+   * @return
+   */
+  public double getSafeDouble(JTextField textField);
 
-//  /**
-//   * @param textField It can be JTextField (for Swing) or Text (for SWT)
-//   * @param defaultValue
-//   * @return
-//   */
-//  public double getSafeDouble(Object textField, double defaultValue);
-//
-//  /**
-//   * @param textField It can be JTextField (for Swing) or Text (for SWT)
-//   * @return
-//   */
-//  public double getSafeDouble(Object textField);
-//
-//  /**
-//   * @param textField It can be JTextField (for Swing) or Text (for SWT)
-//   * @return
-//   */
-//  public double[] getSafeDoubleList(Object textField);
+  /**
+   * @param textField It can be JTextField (for Swing) or Text (for SWT)
+   * @return
+   */
+  public double[] getSafeDoubleList(JTextField textField);
 
 }

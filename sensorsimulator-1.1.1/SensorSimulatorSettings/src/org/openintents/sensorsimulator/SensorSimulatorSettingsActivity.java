@@ -497,16 +497,16 @@ public class SensorSimulatorSettingsActivity extends Activity{
 			}
 			
 			//If Barcode is enabled, this method is used only for Barcode output
-			for (int i = 0; i < mNumSensors; i++) {
-	        	if ((mSingleSensorView[i].mSensorBit == sensor) && sensor==9) {
-	        		// Update this view
-	        		String data = "";
-                    data = event.barcode;
-	                	
-	        		mSingleSensorView[i].mTextView.setText(data);
-	        		break;
-	        	}
-			}
+//			for (int i = 0; i < mNumSensors; i++) {
+//	        	if ((mSingleSensorView[i].mSensorBit == sensor) && sensor==9) {
+//	        		// Update this view
+//	        		String data = "";
+//                    data = event.barcode;
+//	                	
+//	        		mSingleSensorView[i].mTextView.setText(data);
+//	        		break;
+//	        	}
+//			}
 		}
 
 	};

@@ -67,31 +67,10 @@ public class MobilePanel extends JPanel implements IMobilePanel {
 	 * This value is updated only at the desired
 	 * updateSensorRate().
 	 */
-	private double read_accelx;
-	/** Current read-out value of accelerometer y-component. */
-	private double read_accely;
-	/** Current read-out value of accelerometer z-component. */
-	private double read_accelz;
-
-	/** Current read-out value of compass x-component. */
-	private double read_compassx;
-	/** Current read-out value of compass y-component. */
-	private double read_compassy;
-	/** Current read-out value of compass z-component. */
-	private double read_compassz;
-
-	/** Current read-out value of orientation yaw. */
-	private double read_yaw;
-	/** Current read-out value of orientation pitch. */
-	private double read_pitch;
-	/** Current read-out value of orientation roll. */
-	private double read_roll;
-
 	/** Current read-out value of temperature. */
 	private double read_temperature;
 
 	/**Current read-out value of barcode. */
-	private String barcode_reader;
 
 	/** Current read-out value of light. */
 	private float read_light;
@@ -99,36 +78,13 @@ public class MobilePanel extends JPanel implements IMobilePanel {
 	/** Current read-out value of proximity. */
     private float read_proximity;
     
-	/** Duration (in milliseconds) between two updates.
-	 * This is the inverse of the update rate.
-	 */
-	private long accel_update_duration;
-
-	/** Time of next update required.
-	 * The time is compared to System.currentTimeMillis().
-	 */
-	private long accel_next_update;
-
-	/** Duration (in milliseconds) between two updates.
-	 * This is the inverse of the update rate.
-	 */
-	private long compass_update_duration;
-
-	/** Time of next update required.
-	 * The time is compared to System.currentTimeMillis().
-	 */
-	private long compass_next_update;
-
-	/** Duration (in milliseconds) between two updates.
-	 * This is the inverse of the update rate.
-	 */
-	private long orientation_update_duration;
-
-	/** Time of next update required.
-	 * The time is compared to System.currentTimeMillis().
-	 */
-	private long orientation_next_update;
-
+    private double read_carbon_monoxide;
+    private double read_red_gas;
+    private double read_ox_gas;
+    private double read_humidity;
+    private double read_pressure;
+    private double read_infrared;
+    
 	/** Duration (in milliseconds) between two updates.
 	 * This is the inverse of the update rate.
 	 */
@@ -163,6 +119,78 @@ public class MobilePanel extends JPanel implements IMobilePanel {
      */
     private long proximity_next_update;
     
+    /**
+     * Duration (in milliseconds) between two updates. This is the inverse of
+     * the update rate.
+     */
+    private long carbon_monoxide_update_duration;
+
+    /**
+     * Time of next update required. The time is compared to
+     * System.currentTimeMillis().
+     */
+    private long carbon_monoxide_next_update;
+    
+    /**
+     * Duration (in milliseconds) between two updates. This is the inverse of
+     * the update rate.
+     */
+    private long red_gas_update_duration;
+
+    /**
+     * Time of next update required. The time is compared to
+     * System.currentTimeMillis().
+     */
+    private long red_gas_next_update;
+    
+    /**
+     * Duration (in milliseconds) between two updates. This is the inverse of
+     * the update rate.
+     */
+    private long ox_gas_update_duration;
+
+    /**
+     * Time of next update required. The time is compared to
+     * System.currentTimeMillis().
+     */
+    private long ox_gas_next_update;
+    
+    /**
+     * Duration (in milliseconds) between two updates. This is the inverse of
+     * the update rate.
+     */
+    private long humidity_update_duration;
+
+    /**
+     * Time of next update required. The time is compared to
+     * System.currentTimeMillis().
+     */
+    private long humidity_next_update;
+    
+    /**
+     * Duration (in milliseconds) between two updates. This is the inverse of
+     * the update rate.
+     */
+    private long pressure_update_duration;
+
+    /**
+     * Time of next update required. The time is compared to
+     * System.currentTimeMillis().
+     */
+    private long pressure_next_update;
+    
+    /**
+     * Duration (in milliseconds) between two updates. This is the inverse of
+     * the update rate.
+     */
+    private long infrared_update_duration;
+
+    /**
+     * Time of next update required. The time is compared to
+     * System.currentTimeMillis().
+     */
+    private long infrared_next_update;
+    
 	/** Duration in milliseconds until user setting
 	 * changes are read out.
 	 */
@@ -172,50 +200,6 @@ public class MobilePanel extends JPanel implements IMobilePanel {
 	 * The time is compared to System.currentTimeMillis().
 	 */
 	private long user_settings_next_update;
-
-	/**
-	 * Partial read-out value of accelerometer x-component.
-	 *
-	 * This partial value is used to calculate the
-	 * sensor average.
-	 */
-	private double partial_accelx;
-	/** Partial read-out value of accelerometer y-component. */
-	private double partial_accely;
-	/** Partial read-out value of accelerometer z-component. */
-	private double partial_accelz;
-	/** Number of summands in partial sum for accelerometer. */
-	private int partial_accel_n;
-	/** Whether to form the average over the last duration when reading out sensors.
-	 * Alternative is to just take the current value.
-	 */
-	private boolean average_accel;
-
-	/** Partial read-out value of compass x-component. */
-	private double partial_compassx;
-	/** Partial read-out value of compass y-component. */
-	private double partial_compassy;
-	/** Partial read-out value of compass z-component. */
-	private double partial_compassz;
-	/** Number of summands in partial sum for compass. */
-	private int partial_compass_n;
-	/** Whether to form the average over the last duration when reading out sensors.
-	 * Alternative is to just take the current value.
-	 */
-	private boolean average_compass;
-
-	/** Partial read-out value of orientation yaw. */
-	private double partial_yaw;
-	/** Partial read-out value of orientation pitch. */
-	private double partial_pitch;
-	/** Partial read-out value of orientation roll. */
-	private double partial_roll;
-	/** Number of summands in partial sum for orientation. */
-	private int partial_orientation_n;
-	/** Whether to form the average over the last duration when reading out sensors.
-	 * Alternative is to just take the current value.
-	 */
-	private boolean average_orientation;
 
 	/** Partial read-out value of temperature. */
 	private double partial_temperature;
@@ -246,33 +230,62 @@ public class MobilePanel extends JPanel implements IMobilePanel {
      */
     private boolean average_proximity;
     
-	/** Internal state value of accelerometer x-component.
-	 *
-	 * This value is updated regularly by updateSensorPhysics().
+	/** Partial read-out value of carbon_monoxide. */
+	private double partial_carbon_monoxide;
+	/** Number of summands in partial sum for carbon_monoxide. */
+	private int partial_carbon_monoxide_n;
+	/** Whether to form the average over the last duration when reading out sensors.
+	 * Alternative is to just take the current value.
 	 */
-	private double accelx;
-	/** Internal state value of accelerometer x-component. */
-	private double accely;
-	/** Internal state value of accelerometer x-component. */
-	private double accelz;
-
-	/** Internal state value of compass x-component. */
-	private double compassx;
-	/** Internal state value of compass y-component. */
-	private double compassy;
-	/** Internal state value of compass z-component. */
-	private double compassz;
-
-	// orientation (in degree)
-	private double yaw;
-	private double pitch;
-	private double roll;
-
+	private boolean average_carbon_monoxide;
+	
+	/** Partial read-out value of red_gas. */
+	private double partial_red_gas;
+	/** Number of summands in partial sum for red_gas. */
+	private int partial_red_gas_n;
+	/** Whether to form the average over the last duration when reading out sensors.
+	 * Alternative is to just take the current value.
+	 */
+	private boolean average_red_gas;
+	
+	/** Partial read-out value of ox_gas. */
+	private double partial_ox_gas;
+	/** Number of summands in partial sum for ox_gas. */
+	private int partial_ox_gas_n;
+	/** Whether to form the average over the last duration when reading out sensors.
+	 * Alternative is to just take the current value.
+	 */
+	private boolean average_ox_gas;
+	
+	/** Partial read-out value of humidity. */
+	private double partial_humidity;
+	/** Number of summands in partial sum for humidity. */
+	private int partial_humidity_n;
+	/** Whether to form the average over the last duration when reading out sensors.
+	 * Alternative is to just take the current value.
+	 */
+	private boolean average_humidity;
+	
+	/** Partial read-out value of pressure. */
+	private double partial_pressure;
+	/** Number of summands in partial sum for pressure. */
+	private int partial_pressure_n;
+	/** Whether to form the average over the last duration when reading out sensors.
+	 * Alternative is to just take the current value.
+	 */
+	private boolean average_pressure;
+	
+	/** Partial read-out value of infrared. */
+	private double partial_infrared;
+	/** Number of summands in partial sum for infrared. */
+	private int partial_infrared_n;
+	/** Whether to form the average over the last duration when reading out sensors.
+	 * Alternative is to just take the current value.
+	 */
+	private boolean average_infrared;
+    
 	// thermometer
 	private double temperature;
-
-	//barcode
-	private String barcode;
 
 	// light
 	private float light;
@@ -280,63 +293,18 @@ public class MobilePanel extends JPanel implements IMobilePanel {
 	// proximity
     private float proximity;
     
-	// orientation sensor raw data (in degree)
-	private double yawDegree;
-	private double pitchDegree;
-	private double rollDegree;
-
-	/** Current position on screen. */
-	private int movex;
-	/** Current position on screen. */
-	private int movez;
-
-	private int oldx;
-	private int oldz;
-	private double vx; // velocity
-	private double vz;
-	private double oldvx;
-	private double oldvz;
-	private double ax; // acceleration
-	private double az;
-
-	private double Fx; // force
-	private double Fz; // force
-	private double accx; // accelerometer position x on screen
-	private double accz; // (DONT confuse with acceleration a!)
-
-	/** Spring constant. */
-	private double k; // spring constant
-
-	/** Mass of accelerometer test particle.
-	 *
-	 *  This is set to 1, as only the ratio
-	 *  k/m enters the simulation. */
-	private double m; // mass of accelerometer test particle
-
-	/** Damping constant. */
-	private double gamma; // damping of spring
-
-	private double dt; // time step size
-
-	/** Inverse of screen pixel per meter */
-	private double meterperpixel;
-
+    private double carbonMonoxide;
+    private double redGas;
+    private double oxGas;
+    private double humidity;
+    private double pressure;
+    private double infrared;
+    
 	/** Gravity constant.
 	 *
 	 * This takes the value 9.8 m/s^2.
 	 * */
 	private double g;
-
-	/** 1/g (g-inverse) */
-	private double ginverse;
-
-	private int mousedownx;
-	private int mousedowny;
-	private int mousedownyaw;
-	private int mousedownpitch;
-	private int mousedownroll;
-	private int mousedownmovex;
-	private int mousedownmovez;
 
 	private Random r;
 
@@ -350,42 +318,8 @@ public class MobilePanel extends JPanel implements IMobilePanel {
 	 * toward the device, and the Z axis goes upwards perpendicular to the
 	 * surface.
 	 */
-	// Mobile size
-	private final double sx = 15; // size x
-	private final double sy = 40; // size y
-	private final double sz = 5; // size z
-
-	// Display size
-	private final double dx = 12; // size x
-	private final double dy1 = 33; // size y
-	private final double dy2 = -15;
-
-	/** Contains the grid model of the phone. */
-	private double[][] phone = {
-			// bottom shape
-			{ sx, sy, -sz}, {-sx, sy, -sz},
-			{-sx, sy, -sz}, {-sx,-sy, -sz},
-			{-sx,-sy, -sz}, { sx,-sy, -sz},
-			{ sx,-sy, -sz}, { sx, sy, -sz},
-			// top shape
-			{ sx, sy, sz}, {-sx, sy, sz},
-			{-sx, sy, sz}, {-sx,-sy, sz},
-			{-sx,-sy, sz}, { sx,-sy, sz},
-			{ sx,-sy, sz}, { sx, sy, sz},
-			// connectint top and bottom
-			{ sx, sy, -sz}, { sx, sy, sz},
-			{-sx, sy, -sz}, {-sx, sy, sz},
-			{-sx,-sy, -sz}, {-sx,-sy, sz},
-			{ sx,-sy, -sz}, { sx,-sy, sz},
-			// display
-			{ dx, dy1, sz}, {-dx, dy1, sz},
-			{-dx, dy1, sz}, {-dx, dy2, sz},
-			{-dx, dy2, sz}, { dx, dy2, sz},
-			{ dx, dy2, sz}, { dx, dy1, sz},
-		};
+//	// Mobile size
 	
-	//File usage
-
 	/**
 	 * Constructor of MobilePanel.
 	 *
@@ -394,31 +328,7 @@ public class MobilePanel extends JPanel implements IMobilePanel {
 	public MobilePanel(ISensorSimulator newSensorSimulator) {
 		mSensorSimulator = newSensorSimulator;
 
-		// setBorder(BorderFactory.createLineBorder(Color.black));
-
-		yawDegree = 0;
-		pitchDegree = 0;
-		rollDegree = 0;
-
-		movex = 0;
-		movez = 0;
-		oldx = 0;
-		oldz = 0;
-		oldvx = 0;
-		oldvz = 0;
-
-		Fx = 0;
-		Fz = 0;
-		accx = 0;
-		accz = 0;
-		k = 500; // spring constant
-		m = 1; // mass
-		gamma = 50; // damping
-
-		dt = 0.1;
-		meterperpixel = 1/3000.; // meter per pixel
 		g = 9.80665; // meter per second^2
-		ginverse = 1 / g;
 
 		user_settings_duration = 500;  // Update every half second. This should be enough.
 		user_settings_next_update = System.currentTimeMillis(); // First update is now.
@@ -431,13 +341,13 @@ public class MobilePanel extends JPanel implements IMobilePanel {
 	    addMouseListener(new MouseAdapter() {
 	        public void mousePressed(MouseEvent e) {
 	            //moveSquare(e.getX(),e.getY());
-	        	mousedownx = e.getX();
-	        	mousedowny = e.getY();
-	        	mousedownyaw = mSensorSimulator.getYaw();
-	        	mousedownpitch = mSensorSimulator.getPitch();
-	        	mousedownroll = mSensorSimulator.getRoll();
-	        	mousedownmovex = movex;
-	        	mousedownmovez = movez;
+//	        	mousedownx = e.getX();
+//	        	mousedowny = e.getY();
+//	        	mousedownyaw = mSensorSimulator.getYaw();
+//	        	mousedownpitch = mSensorSimulator.getPitch();
+//	        	mousedownroll = mSensorSimulator.getRoll();
+//	        	mousedownmovex = movex;
+//	        	mousedownmovez = movez;
 
 	        }
 	    });
@@ -445,48 +355,48 @@ public class MobilePanel extends JPanel implements IMobilePanel {
 	    addMouseMotionListener(new MouseMotionListener() {
 	        public void mouseDragged(MouseEvent e) {
 	            //moveSquare(e.getX(),e.getY());
-	        	if (mSensorSimulator.getMouseMode()
-	        			== ISensorSimulator.mouseYawPitch) {
-		        	// Control yawDegree
-		        	int newyaw = mousedownyaw - (e.getX() - mousedownx);
-		        	while (newyaw > 180) newyaw -= 360;
-		        	while (newyaw < -180) newyaw += 360;
-		        	mSensorSimulator.setYaw(newyaw);
-		        	yawDegree = newyaw;
-
-		        	// Control pitch
-		        	int newpitch = mousedownpitch - (e.getY() - mousedowny);
-		        	while (newpitch > 180) newpitch -= 360;
-		        	while (newpitch < -180) newpitch += 360;
-		        	mSensorSimulator.setPitch(newpitch);
-		        	pitchDegree = newpitch;
-	        	} else if (mSensorSimulator.getMouseMode()
-	        			== ISensorSimulator.mouseRollPitch) {
-		        	// Control roll
-		        	int newroll = mousedownroll + (e.getX() - mousedownx);
-		        	while (newroll > 180) newroll -= 360;
-		        	while (newroll < -180) newroll += 360;
-		        	mSensorSimulator.setRoll(newroll);
-		        	rollDegree = newroll;
-
-		        	// Control pitch
-		        	int newpitch = mousedownpitch - (e.getY() - mousedowny);
-		        	while (newpitch > 180) newpitch -= 360;
-		        	while (newpitch < -180) newpitch += 360;
-		        	mSensorSimulator.setPitch(newpitch);
-		        	pitchDegree = newpitch;
-	        	} else if (mSensorSimulator.getMouseMode()
-	        			== ISensorSimulator.mouseMove) {
-		        	// Control roll
-		        	int newmovex = mousedownmovex + (e.getX() - mousedownx);
-		        	movex = newmovex;
-
-		        	// Control pitch
-		        	int newmovez = mousedownmovez - (e.getY() - mousedowny);
-		        	movez = newmovez;
-	        	}
-
-	        	repaint();
+//	        	if (mSensorSimulator.getMouseMode()
+//	        			== ISensorSimulator.mouseYawPitch) {
+//		        	// Control yawDegree
+//		        	int newyaw = mousedownyaw - (e.getX() - mousedownx);
+//		        	while (newyaw > 180) newyaw -= 360;
+//		        	while (newyaw < -180) newyaw += 360;
+//		        	mSensorSimulator.setYaw(newyaw);
+//		        	yawDegree = newyaw;
+//
+//		        	// Control pitch
+//		        	int newpitch = mousedownpitch - (e.getY() - mousedowny);
+//		        	while (newpitch > 180) newpitch -= 360;
+//		        	while (newpitch < -180) newpitch += 360;
+//		        	mSensorSimulator.setPitch(newpitch);
+//		        	pitchDegree = newpitch;
+//	        	} else if (mSensorSimulator.getMouseMode()
+//	        			== ISensorSimulator.mouseRollPitch) {
+//		        	// Control roll
+//		        	int newroll = mousedownroll + (e.getX() - mousedownx);
+//		        	while (newroll > 180) newroll -= 360;
+//		        	while (newroll < -180) newroll += 360;
+//		        	mSensorSimulator.setRoll(newroll);
+//		        	rollDegree = newroll;
+//
+//		        	// Control pitch
+//		        	int newpitch = mousedownpitch - (e.getY() - mousedowny);
+//		        	while (newpitch > 180) newpitch -= 360;
+//		        	while (newpitch < -180) newpitch += 360;
+//		        	mSensorSimulator.setPitch(newpitch);
+//		        	pitchDegree = newpitch;
+//	        	} else if (mSensorSimulator.getMouseMode()
+//	        			== ISensorSimulator.mouseMove) {
+//		        	// Control roll
+//		        	int newmovex = mousedownmovex + (e.getX() - mousedownx);
+//		        	movex = newmovex;
+//
+//		        	// Control pitch
+//		        	int newmovez = mousedownmovez - (e.getY() - mousedowny);
+//		        	movez = newmovez;
+//	        	}
+//
+//	        	repaint();
 	        }
 
             public void mouseMoved(MouseEvent evt) {
@@ -515,14 +425,13 @@ public class MobilePanel extends JPanel implements IMobilePanel {
 			mSensorSimulator.setDelay((int) newdelay);
 		}
 
-		dt = 0.001 * mSensorSimulator.getDelay(); // from ms to s
-		g = mSensorSimulator.getGravityConstant();
-		if (g != 0) {
-			ginverse = 1 / g;
-		}
-		meterperpixel = 1 / mSensorSimulator.getPixelsPerMeter();
-		k = mSensorSimulator.getSpringConstant();
-		gamma = mSensorSimulator.getDampingConstant();
+//		g = mSensorSimulator.getGravityConstant();
+//		if (g != 0) {
+//			ginverse = 1 / g;
+//		}
+//		meterperpixel = 1 / mSensorSimulator.getPixelsPerMeter();
+//		k = mSensorSimulator.getSpringConstant();
+//		gamma = mSensorSimulator.getDampingConstant();
 
 	/*
 		// Calculate velocity induced by mouse:
@@ -547,12 +456,12 @@ public class MobilePanel extends JPanel implements IMobilePanel {
 		// sensor test particle, assuming that
 		// the accelerometer is mounted by a string:
 		// F = - k * x
-		Fx = + k * (movex - accx);
-		Fz = + k * (movez - accz);
-
-		// a = F / m
-		ax = Fx / m;
-		az = Fz / m;
+//		Fx = + k * (movex - accx);
+//		Fz = + k * (movez - accz);
+//
+//		// a = F / m
+//		ax = Fx / m;
+//		az = Fz / m;
 
 		// Calculate velocity by integrating
 		// the current acceleration.
@@ -562,20 +471,20 @@ public class MobilePanel extends JPanel implements IMobilePanel {
 		//vx += (ax - vx * gamma) * dt;
 		//vz += (az - vz * gamma) * dt;
 
-		vx += (ax) * dt;
-		vz += (az) * dt;
+//		vx += (ax) * dt;
+//		vz += (az) * dt;
 
 		// Now this is the force that tries to adjust
 		// the accelerometer back
 		// integrate dx/dt = v;
-		accx += vx * dt;
-		accz += vz * dt;
+//		accx += vx * dt;
+//		accz += vz * dt;
 
 		// We put damping here: We don't want to damp for
 		// zero motion with respect to the background,
 		// but with respect to the mobile phone:
-		accx += gamma * (movex - accx) * dt;
-		accz += gamma * (movez - accz) * dt;
+//		accx += gamma * (movex - accx) * dt;
+//		accz += gamma * (movez - accz) * dt;
 
 		/*
 		// Old values:
@@ -586,156 +495,156 @@ public class MobilePanel extends JPanel implements IMobilePanel {
 		*/
 
 		// Calculate acceleration by gravity:
-		double gravityax;
-		double gravityay;
-		double gravityaz;
-
-		gravityax = mSensorSimulator.getGravityX();
-		gravityay = mSensorSimulator.getGravityY();
-		gravityaz = mSensorSimulator.getGravityZ();
-
+//		double gravityax;
+//		double gravityay;
+//		double gravityaz;
+//
+//		gravityax = mSensorSimulator.getGravityX();
+//		gravityay = mSensorSimulator.getGravityY();
+//		gravityaz = mSensorSimulator.getGravityZ();
+//
 
 		////
 		// Now calculate this into mobile phone acceleration:
 		// ! Mobile phone's acceleration is just opposite to
 		// lab frame acceleration !
-		vec = new Vector(-ax * meterperpixel + gravityax, gravityay, -az * meterperpixel + gravityaz);
-
-		// we reverse roll, pitch, and yawDegree,
-		// as this is how the mobile phone sees the coordinate system.
-		vec.reverserollpitchyaw(rollDegree, pitchDegree, yawDegree);
-
-		if (mSensorSimulator.isEnabledAccelerometer()) {
-			if (mSensorSimulator.useRealDeviceWiimtoe()) {
-				accelx = mSensorSimulator.getWiiMoteData().getX() * g;
-				accely = mSensorSimulator.getWiiMoteData().getY() * g;
-				accelz = mSensorSimulator.getWiiMoteData().getZ() * g;
-			}
-			else {
-				accelx = vec.x;
-				accely = vec.y;
-				accelz = vec.z;
-
-				if (mSensorSimulator.useRealDeviceThinkpad()) {
-					// We will use data directly from sensor instead:
-
-					// Read data from file
-					String line = "";
-					try {
-					  //FileReader always assumes default encoding is OK!
-					  BufferedReader input =  new BufferedReader(
-							  new FileReader(mSensorSimulator.getRealDevicePath()));
-					  try {
-						  line = input.readLine();
-					  } finally {
-					    input.close();
-					    //mSensorSimulator.mRealDeviceThinkpadOutputLabel.setBackground(Color.WHITE);
-					  }
-					}
-					catch (IOException ex){
-					  ex.printStackTrace();
-					  //mSensorSimulator.mRealDeviceThinkpadOutputLabel.setBackground(Color.RED);
-					  line = "Error reading file!";
-					}
-
-					// Show the line content:
-					mSensorSimulator.setRealDeviceOutput(line);
-
-					// Assign values
-
-					// Create z-component (optional)
-
-				}
-
-				// Add random component:
-				random = mSensorSimulator.getRandomAccelerometer();
-				if (random > 0) {
-					accelx += getRandom(random);
-					accely += getRandom(random);
-					accelz += getRandom(random);
-				}
-
-				// Add accelerometer limit:
-				double limit = g * mSensorSimulator.getAccelerometerLimit();
-				if (limit > 0) {
-					// limit on each component separately, as each is
-					// a separate sensor.
-					if (accelx > limit) accelx = limit;
-					if (accelx < -limit) accelx = -limit;
-					if (accely > limit) accely = limit;
-					if (accely < -limit) accely = -limit;
-					if (accelz > limit) accelz = limit;
-					if (accelz < -limit) accelz = -limit;
-				}
-			}
-		} else {
-			accelx = 0;
-			accely = 0;
-			accelz = 0;
-		}
-
-		// Calculate magnetic field:
-		// Calculate acceleration by gravity:
-		double magneticnorth;
-		double magneticeast;
-		double magneticvertical;
-
-		if (mSensorSimulator.isEnabledMagneticField()) {
-			magneticnorth = mSensorSimulator.getMagneticFieldNorth();
-			magneticeast = mSensorSimulator.getMagneticFieldEast();
-			magneticvertical = mSensorSimulator.getMagneticFieldVertical();
-
-			// Add random component:
-			random = mSensorSimulator.getRandomMagneticField();
-			if (random > 0) {
-				magneticnorth += getRandom(random);
-				magneticeast += getRandom(random);
-				magneticvertical += getRandom(random);
-			}
-
-			// Magnetic vector in phone coordinates:
-			vec = new Vector(magneticeast, magneticnorth, -magneticvertical);
-			vec.scale(0.001); // convert from nT (nano-Tesla) to �T (micro-Tesla)
-
-			// we reverse roll, pitch, and yawDegree,
-			// as this is how the mobile phone sees the coordinate system.
-			vec.reverserollpitchyaw(rollDegree, pitchDegree, yawDegree);
-
-			compassx = vec.x;
-			compassy = vec.y;
-			compassz = vec.z;
-		} else {
-			compassx = 0;
-			compassy = 0;
-			compassz = 0;
-		}
-
-		// Orientation is currently not affected:
-		if (mSensorSimulator.isEnabledOrientation()) {
-			//yaw = Math.toRadians(yawDegree);
-			//pitch = Math.toRadians(pitchDegree);
-			//roll = Math.toRadians(rollDegree);
-			// Since OpenGL uses degree as input,
-			// and it seems also more user-friendly,
-			// let us stick to degree.
-			// (it seems, professional sensors also use
-			//  degree output.)
-			yaw = yawDegree;
-			pitch = pitchDegree;
-			roll = rollDegree;
-
-			// Add random component:
-			random = mSensorSimulator.getRandomOrientation();
-			if (random > 0) {
-				yaw += getRandom(random);
-				pitch += getRandom(random);
-				roll += getRandom(random);
-			}
-		} else {
-			yaw = 0;
-			pitch = 0;
-			roll = 0;
-		}
+//		vec = new Vector(-ax * meterperpixel + gravityax, gravityay, -az * meterperpixel + gravityaz);
+//
+//		// we reverse roll, pitch, and yawDegree,
+//		// as this is how the mobile phone sees the coordinate system.
+//		vec.reverserollpitchyaw(rollDegree, pitchDegree, yawDegree);
+//
+//		if (mSensorSimulator.isEnabledAccelerometer()) {
+//			if (mSensorSimulator.useRealDeviceWiimtoe()) {
+//				accelx = mSensorSimulator.getWiiMoteData().getX() * g;
+//				accely = mSensorSimulator.getWiiMoteData().getY() * g;
+//				accelz = mSensorSimulator.getWiiMoteData().getZ() * g;
+//			}
+//			else {
+//				accelx = vec.x;
+//				accely = vec.y;
+//				accelz = vec.z;
+//
+//				if (mSensorSimulator.useRealDeviceThinkpad()) {
+//					// We will use data directly from sensor instead:
+//
+//					// Read data from file
+//					String line = "";
+//					try {
+//					  //FileReader always assumes default encoding is OK!
+//					  BufferedReader input =  new BufferedReader(
+//							  new FileReader(mSensorSimulator.getRealDevicePath()));
+//					  try {
+//						  line = input.readLine();
+//					  } finally {
+//					    input.close();
+//					    //mSensorSimulator.mRealDeviceThinkpadOutputLabel.setBackground(Color.WHITE);
+//					  }
+//					}
+//					catch (IOException ex){
+//					  ex.printStackTrace();
+//					  //mSensorSimulator.mRealDeviceThinkpadOutputLabel.setBackground(Color.RED);
+//					  line = "Error reading file!";
+//					}
+//
+//					// Show the line content:
+//					mSensorSimulator.setRealDeviceOutput(line);
+//
+//					// Assign values
+//
+//					// Create z-component (optional)
+//
+//				}
+//
+//				// Add random component:
+//				random = mSensorSimulator.getRandomAccelerometer();
+//				if (random > 0) {
+//					accelx += getRandom(random);
+//					accely += getRandom(random);
+//					accelz += getRandom(random);
+//				}
+//
+//				// Add accelerometer limit:
+//				double limit = g * mSensorSimulator.getAccelerometerLimit();
+//				if (limit > 0) {
+//					// limit on each component separately, as each is
+//					// a separate sensor.
+//					if (accelx > limit) accelx = limit;
+//					if (accelx < -limit) accelx = -limit;
+//					if (accely > limit) accely = limit;
+//					if (accely < -limit) accely = -limit;
+//					if (accelz > limit) accelz = limit;
+//					if (accelz < -limit) accelz = -limit;
+//				}
+//			}
+//		} else {
+//			accelx = 0;
+//			accely = 0;
+//			accelz = 0;
+//		}
+//
+//		// Calculate magnetic field:
+//		// Calculate acceleration by gravity:
+//		double magneticnorth;
+//		double magneticeast;
+//		double magneticvertical;
+//
+//		if (mSensorSimulator.isEnabledMagneticField()) {
+//			magneticnorth = mSensorSimulator.getMagneticFieldNorth();
+//			magneticeast = mSensorSimulator.getMagneticFieldEast();
+//			magneticvertical = mSensorSimulator.getMagneticFieldVertical();
+//
+//			// Add random component:
+//			random = mSensorSimulator.getRandomMagneticField();
+//			if (random > 0) {
+//				magneticnorth += getRandom(random);
+//				magneticeast += getRandom(random);
+//				magneticvertical += getRandom(random);
+//			}
+//
+//			// Magnetic vector in phone coordinates:
+//			vec = new Vector(magneticeast, magneticnorth, -magneticvertical);
+//			vec.scale(0.001); // convert from nT (nano-Tesla) to �T (micro-Tesla)
+//
+//			// we reverse roll, pitch, and yawDegree,
+//			// as this is how the mobile phone sees the coordinate system.
+//			vec.reverserollpitchyaw(rollDegree, pitchDegree, yawDegree);
+//
+//			compassx = vec.x;
+//			compassy = vec.y;
+//			compassz = vec.z;
+//		} else {
+//			compassx = 0;
+//			compassy = 0;
+//			compassz = 0;
+//		}
+//
+//		// Orientation is currently not affected:
+//		if (mSensorSimulator.isEnabledOrientation()) {
+//			//yaw = Math.toRadians(yawDegree);
+//			//pitch = Math.toRadians(pitchDegree);
+//			//roll = Math.toRadians(rollDegree);
+//			// Since OpenGL uses degree as input,
+//			// and it seems also more user-friendly,
+//			// let us stick to degree.
+//			// (it seems, professional sensors also use
+//			//  degree output.)
+//			yaw = yawDegree;
+//			pitch = pitchDegree;
+//			roll = rollDegree;
+//
+//			// Add random component:
+//			random = mSensorSimulator.getRandomOrientation();
+//			if (random > 0) {
+//				yaw += getRandom(random);
+//				pitch += getRandom(random);
+//				roll += getRandom(random);
+//			}
+//		} else {
+//			yaw = 0;
+//			pitch = 0;
+//			roll = 0;
+//		}
 
 		// Thermometer
 		if (mSensorSimulator.isEnabledTemperature()) {
@@ -749,18 +658,6 @@ public class MobilePanel extends JPanel implements IMobilePanel {
 		} else {
 			temperature = 0;
 		}
-
-		// Barcode
-		if (mSensorSimulator.isEnabledBarcodeReader()) {
-			barcode = mSensorSimulator.getBarcode();
-		}
-
-		if (mSensorSimulator.isShowAcceleration()) {
-			// We only have to repaint if we show the acceleration,
-			// otherwise the phone does not change as long as there is
-			// no user interaction.
-			repaint();
-		};
 
 		// Light
 		if (mSensorSimulator.isEnabledLight()) {
@@ -787,6 +684,97 @@ public class MobilePanel extends JPanel implements IMobilePanel {
         } else {
             proximity = 0;
         }
+        
+	    // Proximity
+        if (mSensorSimulator.isEnabledProximity()) {
+            proximity = mSensorSimulator.getProximity();
+
+            // Add random component:
+            random = mSensorSimulator.getRandomProximity();
+            if (random > 0) {
+                proximity += getRandom(random);
+            }
+        } else {
+            proximity = 0;
+        }
+        
+	    // CarbonMonoxide
+        if (mSensorSimulator.isEnabledCarbonMonoxide()) {
+            carbonMonoxide = mSensorSimulator.getCarbonMonoxide();
+
+            // Add random component:
+            random = mSensorSimulator.getRandomCarbonMonoxide();
+            if (random > 0) {
+                carbonMonoxide += getRandom(random);
+            }
+        } else {
+            carbonMonoxide = 0;
+        }
+        
+	    // RedGas
+        if (mSensorSimulator.isEnabledRedGas()) {
+            redGas = mSensorSimulator.getRedGas();
+
+            // Add random component:
+            random = mSensorSimulator.getRandomRedGas();
+            if (random > 0) {
+                redGas += getRandom(random);
+            }
+        } else {
+            redGas = 0;
+        }
+        
+	    // OxGas
+        if (mSensorSimulator.isEnabledOxGas()) {
+            oxGas = mSensorSimulator.getOxGas();
+
+            // Add random component:
+            random = mSensorSimulator.getRandomOxGas();
+            if (random > 0) {
+                oxGas += getRandom(random);
+            }
+        } else {
+            oxGas = 0;
+        }
+        
+	    // Humidity
+        if (mSensorSimulator.isEnabledHumidity()) {
+            humidity = mSensorSimulator.getHumidity();
+
+            // Add random component:
+            random = mSensorSimulator.getRandomHumidity();
+            if (random > 0) {
+                humidity += getRandom(random);
+            }
+        } else {
+            humidity = 0;
+        }
+        
+	    // Pressure
+        if (mSensorSimulator.isEnabledPressure()) {
+            pressure = mSensorSimulator.getPressure();
+
+            // Add random component:
+            random = mSensorSimulator.getRandomPressure();
+            if (random > 0) {
+                pressure += getRandom(random);
+            }
+        } else {
+            pressure = 0;
+        }
+        
+	    // Infrared
+        if (mSensorSimulator.isEnabledInfrared()) {
+            infrared = mSensorSimulator.getInfrared();
+
+            // Add random component:
+            random = mSensorSimulator.getRandomInfrared();
+            if (random > 0) {
+                infrared += getRandom(random);
+            }
+        } else {
+            infrared = 0;
+        }
 }
 
 	/**
@@ -797,30 +785,6 @@ public class MobilePanel extends JPanel implements IMobilePanel {
 
 		// From time to time we
         
-		if (average_accel) {
-			// Form the average
-			partial_accelx += accelx;
-			partial_accely += accely;
-			partial_accelz += accelz;
-			partial_accel_n++;
-		}
-
-		if (average_compass) {
-			// Form the average
-			partial_compassx += compassx;
-			partial_compassy += compassy;
-			partial_compassz += compassz;
-			partial_compass_n++;
-		}
-
-		if (average_orientation) {
-			// Form the average
-			partial_yaw += yaw;
-			partial_pitch += pitch;
-			partial_roll += roll;
-			partial_orientation_n++;
-		}
-
 		if (average_temperature) {
 			// Form the average
 			partial_temperature += temperature;
@@ -839,123 +803,42 @@ public class MobilePanel extends JPanel implements IMobilePanel {
 	        partial_proximity_n++;
 	    }
 	    
-		if (currentTime >= accel_next_update) {
-			// Update
-			accel_next_update += accel_update_duration;
-			if (accel_next_update < currentTime) {
-				// Don't lag too much behind.
-				// If we are too slow, then we are too slow.
-				accel_next_update = currentTime;
-			}
-
-			if (average_accel) {
-				// form average
-				read_accelx = partial_accelx / partial_accel_n;
-				read_accely = partial_accely / partial_accel_n;
-				read_accelz = partial_accelz / partial_accel_n;
-
-				// reset average
-				partial_accelx = 0;
-				partial_accely = 0;
-				partial_accelz = 0;
-				partial_accel_n = 0;
-
-			} else {
-				// Only take current value
-				read_accelx = accelx;
-				read_accely = accely;
-				read_accelz = accelz;
-			}
-
-		}
-
-		if (currentTime >= compass_next_update) {
-			// Update
-			compass_next_update += compass_update_duration;
-			if (compass_next_update < currentTime) {
-				// Don't lag too much behind.
-				// If we are too slow, then we are too slow.
-				compass_next_update = currentTime;
-			}
-
-			if (average_compass) {
-				// form average
-				read_compassx = partial_compassx / partial_compass_n;
-				read_compassy = partial_compassy / partial_compass_n;
-				read_compassz = partial_compassz / partial_compass_n;
-
-				// reset average
-				partial_compassx = 0;
-				partial_compassy = 0;
-				partial_compassz = 0;
-				partial_compass_n = 0;
-
-			} else {
-				// Only take current value
-				read_compassx = compassx;
-				read_compassy = compassy;
-				read_compassz = compassz;
-			}
-
-		}
-
-		if (currentTime >= orientation_next_update) {
-			// Update
-			orientation_next_update += orientation_update_duration;
-			if (orientation_next_update < currentTime) {
-				// Don't lag too much behind.
-				// If we are too slow, then we are too slow.
-				orientation_next_update = currentTime;
-			}
-
-			if (average_orientation) {
-				// form average
-				read_yaw = partial_yaw / partial_orientation_n;
-				read_pitch = partial_pitch / partial_orientation_n;
-				read_roll = partial_roll / partial_orientation_n;
-
-				// reset average
-				partial_yaw = 0;
-				partial_pitch = 0;
-				partial_roll = 0;
-				partial_orientation_n = 0;
-
-			} else {
-				// Only take current value
-				read_yaw = yaw;
-				read_pitch = pitch;
-				read_roll = roll;
-			}
-
-			// Normalize values:
-
-			// Restrict pitch value to -90 to +90
-			if (read_pitch < -90) {
-				read_pitch = -180 - read_pitch;
-				read_yaw += 180;
-				read_roll += 180;
-			} else if (read_pitch > 90) {
-				read_pitch = 180 - read_pitch;
-				read_yaw += 180;
-				read_roll += 180;
-
-			}
-
-			// yaw from 0 to 360
-			if (read_yaw < 0) {
-				read_yaw = read_yaw + 360;
-			}
-			if (read_yaw >= 360) {
-				read_yaw -= 360;
-			}
-
-			// roll from -180 to + 180
-			if (read_roll >= 180) {
-				read_roll -= 360;
-			}
-
-		}
-
+	    if (average_carbon_monoxide) {
+	        // Form the average
+	        partial_carbon_monoxide += carbonMonoxide;
+	        partial_carbon_monoxide_n++;
+	    }
+	    
+	    if (average_red_gas) {
+	        // Form the average
+	        partial_red_gas += redGas;
+	        partial_red_gas_n++;
+	    }
+	    
+	    if (average_ox_gas) {
+	        // Form the average
+	        partial_ox_gas += oxGas;
+	        partial_ox_gas_n++;
+	    }
+	    
+	    if (average_humidity) {
+	        // Form the average
+	        partial_humidity += humidity;
+	        partial_humidity_n++;
+	    }
+	    
+	    if (average_pressure) {
+	        // Form the average
+	        partial_pressure += pressure;
+	        partial_pressure_n++;
+	    }
+	    
+	    if (average_infrared) {
+	        // Form the average
+	        partial_infrared += infrared;
+	        partial_infrared_n++;
+	    }
+	    
 		if (currentTime >= temperature_next_update) {
 			// Update
 			temperature_next_update += temperature_update_duration;
@@ -1025,7 +908,144 @@ public class MobilePanel extends JPanel implements IMobilePanel {
                 // Only take current value
                 read_proximity = proximity;
             }
+        }
+		
+		if (currentTime >= carbon_monoxide_next_update) {
+            // Update
+            carbon_monoxide_next_update += carbon_monoxide_update_duration;
+            if (carbon_monoxide_next_update < currentTime) {
+                // Don't lag too much behind.
+                // If we are too slow, then we are too slow.
+                carbon_monoxide_next_update = currentTime;
+            }
 
+            if (average_carbon_monoxide) {
+                // form average
+                read_carbon_monoxide = partial_carbon_monoxide / partial_carbon_monoxide_n;
+
+                // reset average
+                partial_carbon_monoxide = 0;
+                partial_carbon_monoxide_n = 0;
+
+            } else {
+                // Only take current value
+                read_carbon_monoxide = carbonMonoxide;
+            }
+        }
+		
+		if (currentTime >= red_gas_next_update) {
+            // Update
+            red_gas_next_update += red_gas_update_duration;
+            if (red_gas_next_update < currentTime) {
+                // Don't lag too much behind.
+                // If we are too slow, then we are too slow.
+                red_gas_next_update = currentTime;
+            }
+
+            if (average_red_gas) {
+                // form average
+                read_red_gas = partial_red_gas / partial_red_gas_n;
+
+                // reset average
+                partial_red_gas = 0;
+                partial_red_gas_n = 0;
+
+            } else {
+                // Only take current value
+                read_red_gas = redGas;
+            }
+        }
+		
+		if (currentTime >= ox_gas_next_update) {
+            // Update
+            ox_gas_next_update += ox_gas_update_duration;
+            if (ox_gas_next_update < currentTime) {
+                // Don't lag too much behind.
+                // If we are too slow, then we are too slow.
+                ox_gas_next_update = currentTime;
+            }
+
+            if (average_ox_gas) {
+                // form average
+                read_ox_gas = partial_ox_gas / partial_ox_gas_n;
+
+                // reset average
+                partial_ox_gas = 0;
+                partial_ox_gas_n = 0;
+
+            } else {
+                // Only take current value
+                read_ox_gas = oxGas;
+            }
+        }
+		
+		if (currentTime >= humidity_next_update) {
+            // Update
+            humidity_next_update += humidity_update_duration;
+            if (humidity_next_update < currentTime) {
+                // Don't lag too much behind.
+                // If we are too slow, then we are too slow.
+                humidity_next_update = currentTime;
+            }
+
+            if (average_humidity) {
+                // form average
+                read_humidity = partial_humidity / partial_humidity_n;
+
+                // reset average
+                partial_humidity = 0;
+                partial_humidity_n = 0;
+
+            } else {
+                // Only take current value
+                read_humidity = humidity;
+            }
+        }
+		
+		if (currentTime >= pressure_next_update) {
+            // Update
+            pressure_next_update += pressure_update_duration;
+            if (pressure_next_update < currentTime) {
+                // Don't lag too much behind.
+                // If we are too slow, then we are too slow.
+                pressure_next_update = currentTime;
+            }
+
+            if (average_pressure) {
+                // form average
+                read_pressure = partial_pressure / partial_pressure_n;
+
+                // reset average
+                partial_pressure = 0;
+                partial_pressure_n = 0;
+
+            } else {
+                // Only take current value
+                read_pressure = pressure;
+            }
+        }
+		
+		if (currentTime >= infrared_next_update) {
+            // Update
+            infrared_next_update += infrared_update_duration;
+            if (infrared_next_update < currentTime) {
+                // Don't lag too much behind.
+                // If we are too slow, then we are too slow.
+                infrared_next_update = currentTime;
+            }
+
+            if (average_infrared) {
+                // form average
+                read_infrared = partial_infrared / partial_infrared_n;
+
+                // reset average
+                partial_infrared = 0;
+                partial_infrared_n = 0;
+
+            } else {
+                // Only take current value
+                read_infrared = infrared;
+            }
         }
 	}
 
@@ -1045,30 +1065,6 @@ public class MobilePanel extends JPanel implements IMobilePanel {
 			if (user_settings_next_update < currentTime) {
 				// Skip time if we are already behind:
 				user_settings_next_update = System.currentTimeMillis();
-			}
-
-			average_accel = mSensorSimulator.updateAverageAccelerometer();
-			rate = mSensorSimulator.getCurrentUpdateRateAccelerometer();
-			if (rate != 0) {
-				accel_update_duration = (long) (1000. / rate);
-			} else {
-				accel_update_duration = 0;
-			}
-
-			average_compass = mSensorSimulator.updateAverageCompass();
-			rate = mSensorSimulator.getCurrentUpdateRateCompass();
-			if (rate != 0) {
-				compass_update_duration = (long) (1000. / rate);
-			} else {
-				compass_update_duration = 0;
-			}
-
-			average_orientation = mSensorSimulator.updateAverageOrientation();
-			rate = mSensorSimulator.getCurrentUpdateRateOrientation();
-			if (rate != 0) {
-				orientation_update_duration = (long) (1000. / rate);
-			} else {
-				orientation_update_duration = 0;
 			}
 
 			average_temperature = mSensorSimulator.updateAverageThermometer();
@@ -1093,6 +1089,54 @@ public class MobilePanel extends JPanel implements IMobilePanel {
 	             proximity_update_duration = (long) (1000. / rate);
 	         } else {
 	             proximity_update_duration = 0;
+	         }
+	         
+	         average_carbon_monoxide = mSensorSimulator.updateAverageCarbonMonoxide();
+	         rate = mSensorSimulator.getCurrentUpdateRateCarbonMonoxide();
+	         if (rate != 0) {
+	             carbon_monoxide_update_duration = (long) (1000. / rate);
+	         } else {
+	             carbon_monoxide_update_duration = 0;
+	         }
+	         
+	         average_red_gas = mSensorSimulator.updateAverageRedGas();
+	         rate = mSensorSimulator.getCurrentUpdateRateRedGas();
+	         if (rate != 0) {
+	             red_gas_update_duration = (long) (1000. / rate);
+	         } else {
+	             red_gas_update_duration = 0;
+	         }
+	         
+	         average_ox_gas = mSensorSimulator.updateAverageOxGas();
+	         rate = mSensorSimulator.getCurrentUpdateRateOxGas();
+	         if (rate != 0) {
+	             ox_gas_update_duration = (long) (1000. / rate);
+	         } else {
+	             ox_gas_update_duration = 0;
+	         }
+	         
+	         average_humidity = mSensorSimulator.updateAverageHumidity();
+	         rate = mSensorSimulator.getCurrentUpdateRateHumidity();
+	         if (rate != 0) {
+	             humidity_update_duration = (long) (1000. / rate);
+	         } else {
+	             humidity_update_duration = 0;
+	         }
+	         
+	         average_pressure = mSensorSimulator.updateAveragePressure();
+	         rate = mSensorSimulator.getCurrentUpdateRatePressure();
+	         if (rate != 0) {
+	             pressure_update_duration = (long) (1000. / rate);
+	         } else {
+	             pressure_update_duration = 0;
+	         }
+	         
+	         average_infrared = mSensorSimulator.updateAverageInfrared();
+	         rate = mSensorSimulator.getCurrentUpdateRateInfrared();
+	         if (rate != 0) {
+	             infrared_update_duration = (long) (1000. / rate);
+	         } else {
+	             infrared_update_duration = 0;
 	         }
 		}
 	}
@@ -1130,37 +1174,37 @@ public class MobilePanel extends JPanel implements IMobilePanel {
         double centerx = 100;
         double centery = 100;
         double centerz = -150;
-        for (int i=0; i<phone.length; i+=2) {
-        	if (i==0) g2.setColor(Color.RED);
-        	if (i==24) g2.setColor(Color.BLUE);
-
-        	Vector v1 = new Vector(phone[i]);
-        	Vector v2 = new Vector(phone[i+1]);
-        	v1.rollpitchyaw(rollDegree, pitchDegree, yawDegree);
-        	v2.rollpitchyaw(rollDegree, pitchDegree, yawDegree);
-            g2.draw(new Line2D.Double(
-            		centerx + (v1.x + movex) * centerz / (centerz - v1.y),
-            		centery - (v1.z + movez) * centerz / (centerz - v1.y),
-            		centerx + (v2.x + movex) * centerz / (centerz - v2.y),
-            		centery - (v2.z + movez) * centerz / (centerz - v2.y)));
-        }
-
-        if (mSensorSimulator.isShowAcceleration()) {
-	        // Now we also draw the acceleration:
-	        g2.setColor(Color.GREEN);
-	    	Vector v1 = new Vector(0,0,0);
-	    	Vector v2 = new Vector(accelx, accely, accelz);
-	    	v2.scale(20 * ginverse);
-	        //Vector v2 = new Vector(1, 0, 0);
-	    	v1.rollpitchyaw(rollDegree, pitchDegree, yawDegree);
-	    	v2.rollpitchyaw(rollDegree, pitchDegree, yawDegree);
-	    	g2.draw(new Line2D.Double(
-	        		centerx + (v1.x + movex) * centerz / (centerz - v1.y),
-	        		centery - (v1.z + movez) * centerz / (centerz - v1.y),
-	        		centerx + (v2.x + movex) * centerz / (centerz - v2.y),
-	        		centery - (v2.z + movez) * centerz / (centerz - v2.y)));
-
-        }
+//        for (int i=0; i<phone.length; i+=2) {
+//        	if (i==0) g2.setColor(Color.RED);
+//        	if (i==24) g2.setColor(Color.BLUE);
+//
+//        	Vector v1 = new Vector(phone[i]);
+//        	Vector v2 = new Vector(phone[i+1]);
+//        	v1.rollpitchyaw(rollDegree, pitchDegree, yawDegree);
+//        	v2.rollpitchyaw(rollDegree, pitchDegree, yawDegree);
+//            g2.draw(new Line2D.Double(
+//            		centerx + (v1.x + movex) * centerz / (centerz - v1.y),
+//            		centery - (v1.z + movez) * centerz / (centerz - v1.y),
+//            		centerx + (v2.x + movex) * centerz / (centerz - v2.y),
+//            		centery - (v2.z + movez) * centerz / (centerz - v2.y)));
+//        }
+//
+//        if (mSensorSimulator.isShowAcceleration()) {
+//	        // Now we also draw the acceleration:
+//	        g2.setColor(Color.GREEN);
+//	    	Vector v1 = new Vector(0,0,0);
+//	    	Vector v2 = new Vector(accelx, accely, accelz);
+//	    	v2.scale(20 * ginverse);
+//	        //Vector v2 = new Vector(1, 0, 0);
+//	    	v1.rollpitchyaw(rollDegree, pitchDegree, yawDegree);
+//	    	v2.rollpitchyaw(rollDegree, pitchDegree, yawDegree);
+//	    	g2.draw(new Line2D.Double(
+//	        		centerx + (v1.x + movex) * centerz / (centerz - v1.y),
+//	        		centery - (v1.z + movez) * centerz / (centerz - v1.y),
+//	        		centerx + (v2.x + movex) * centerz / (centerz - v2.y),
+//	        		centery - (v2.z + movez) * centerz / (centerz - v2.y)));
+//
+//        }
     }
 
     /* (non-Javadoc)
@@ -1173,65 +1217,65 @@ public class MobilePanel extends JPanel implements IMobilePanel {
 	/* (non-Javadoc)
 	 * @see org.openintents.tools.sensorsimulator.IMobilePanel#getReadAccelerometerX()
 	 */
-	public double getReadAccelerometerX() {
-		return read_accelx;
-	}
+//	public double getReadAccelerometerX() {
+//		return read_accelx;
+//	}
 
 	/* (non-Javadoc)
 	 * @see org.openintents.tools.sensorsimulator.IMobilePanel#getReadAccelerometerY()
 	 */
-	public double getReadAccelerometerY() {
-		return read_accely;
-	}
+//	public double getReadAccelerometerY() {
+//		return read_accely;
+//	}
 
 	/* (non-Javadoc)
 	 * @see org.openintents.tools.sensorsimulator.IMobilePanel#getReadAccelerometerZ()
 	 */
-	public double getReadAccelerometerZ() {
-		return read_accelz;
-	}
+//	public double getReadAccelerometerZ() {
+//		return read_accelz;
+//	}
 
 	/* (non-Javadoc)
 	 * @see org.openintents.tools.sensorsimulator.IMobilePanel#getReadCompassX()
 	 */
-	public double getReadCompassX() {
-		return read_compassx;
-	}
+//	public double getReadCompassX() {
+//		return read_compassx;
+//	}
 
 	/* (non-Javadoc)
 	 * @see org.openintents.tools.sensorsimulator.IMobilePanel#getReadCompassY()
 	 */
-	public double getReadCompassY() {
-		return read_compassy;
-	}
+//	public double getReadCompassY() {
+//		return read_compassy;
+//	}
 
 	/* (non-Javadoc)
 	 * @see org.openintents.tools.sensorsimulator.IMobilePanel#getReadCompassZ()
-	 */
-	public double getReadCompassZ() {
-		return read_compassz;
-	}
+//	 */
+//	public double getReadCompassZ() {
+//		return read_compassz;
+//	}
 
 	/* (non-Javadoc)
 	 * @see org.openintents.tools.sensorsimulator.IMobilePanel#getReadYaw()
 	 */
-	public double getReadYaw() {
-		return read_yaw;
-	}
+//	public double getReadYaw() {
+//		return read_yaw;
+//	}
 
 	/* (non-Javadoc)
 	 * @see org.openintents.tools.sensorsimulator.IMobilePanel#getReadPitch()
 	 */
-	public double getReadPitch() {
-		return read_pitch;
-	}
+//	public double getReadPitch() {
+//		return read_pitch;
+//	}
 
 	/* (non-Javadoc)
 	 * @see org.openintents.tools.sensorsimulator.IMobilePanel#getReadRoll()
 	 */
-	public double getReadRoll() {
-		return read_roll;
-	}
+//	public double getReadRoll() {
+//		return read_roll;
+//	}
 
 	/* (non-Javadoc)
 	 * @see org.openintents.tools.sensorsimulator.IMobilePanel#getReadTemperature()
@@ -1243,9 +1287,9 @@ public class MobilePanel extends JPanel implements IMobilePanel {
 	/* (non-Javadoc)
 	 * @see org.openintents.tools.sensorsimulator.IMobilePanel#getBarcode()
 	 */
-	public String getBarcode() {
-		return barcode;
-	}
+//	public String getBarcode() {
+//		return barcode;
+//	}
 
 	/*
 	 * (non-Javadoc)
@@ -1265,25 +1309,28 @@ public class MobilePanel extends JPanel implements IMobilePanel {
         return read_proximity;
     }
 
-	/* (non-Javadoc)
-	 * @see org.openintents.tools.sensorsimulator.IMobilePanel#setYawDegree(double)
-	 */
-	public void setYawDegree(double yawDegree) {
-		this.yawDegree = yawDegree;
+	public double getReadCarbonMonoxide() {
+		return read_carbon_monoxide;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openintents.tools.sensorsimulator.IMobilePanel#setPitchDegree(double)
-	 */
-	public void setPitchDegree(double pitchDegree) {
-		this.pitchDegree = pitchDegree;
+	public double getReadRedGas() {
+		return read_red_gas;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openintents.tools.sensorsimulator.IMobilePanel#setRollDegree(double)
-	 */
-	public void setRollDegree(double rollDegree) {
-		this.rollDegree = rollDegree;
+	public double getReadOxGas() {
+		return read_ox_gas;
+	}
+
+	public double getReadHumidity() {
+		return read_humidity;
+	}
+
+	public double getReadPressure() {
+		return read_pressure;
+	}
+
+	public double getReadInfrared() {
+		return read_infrared;
 	}
 
 }

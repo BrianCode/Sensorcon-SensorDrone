@@ -15,28 +15,22 @@ public interface IMobilePanel {
 	public void updateSensorReadoutValues();
 	public void updateUserSettings();
 
-	public double getReadAccelerometerX();
-	public double getReadAccelerometerY();
-	public double getReadAccelerometerZ();
-
-	public double getReadCompassX();
-	public double getReadCompassY();
-	public double getReadCompassZ();
-
-	public double getReadYaw();
-	public double getReadPitch();
-	public double getReadRoll();
-
 	public double getReadTemperature();
 
-	public String getBarcode();
-	
 	public float getReadLight();
 	
 	public float getReadProximity();
-	
-	public void setYawDegree(double yawDegree);
-	public void setPitchDegree(double pitchDegree);
-	public void setRollDegree(double rollDegree);
+
+	public double getReadCarbonMonoxide();
+
+	public double getReadRedGas();
+
+	public double getReadOxGas();
+
+	public double getReadHumidity();
+
+	public double getReadPressure();
+
+	public double getReadInfrared();
 
 }
